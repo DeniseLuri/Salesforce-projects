@@ -1,0 +1,40 @@
+trigger leadTrigger on Lead(before insert, before update, after insert, after update){
+	
+    if(Trigger.isBefore){
+        if(Trigger.isInsert||Trigger.isUpdate){
+            for(Lead leadx : Trigger.new){
+           			 if(leadx.Estado__c == 'SP'||
+                       	leadx.Estado__c == 'RJ'||
+                        leadx.Estado__c == 'MG'||
+                        leadx.Estado__c == 'ES'||
+                      	leadx.Estado__c == 'RS'||
+                        leadx.Estado__c == 'SC'||
+                        leadx.Estado__c == 'PR')
+                     {
+                	  	 leadx.status = 'desqualificado';
+       
+      	 			 }
+    			}
+    
+     		}	
+	}
+}
+
+@istest
+public class leadtriggerteste {
+    
+    @isTest
+    public static void cenario1 (){
+        Lead Novolead = new Lead ();{
+            Novolead.LastName = 'TESTE';
+            Novolead.Estado__c = 'SP';
+            Novolead.Company = 'TESTE';
+            Novolead.annualRevenue =70000;
+            
+            INSERT Novolead;
+            
+            List <lead> listadesqualificados =  [SELECT ID FROM Lead WHERE status LIKE 'desqualificado'];
+            system.assert(listadesqualificados.size()>0, 'Trigger Lead não desqualificou');
+                }
+        }       
+    }

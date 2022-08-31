@@ -1,0 +1,44 @@
+public class ContratoBO {
+    public static void alertaContrato(List<Contract> listaQueVemDaTrigger){
+        for(Contract contrato1 : listaQueVemDaTrigger){
+            if (contrato1.EndDate == Date.today()+19){                    
+                        Event renovacontrato = new Event();
+                            renovacontrato.Type = 'Call';
+                            renovacontrato.Subject ='Entrar em contato com o cliente';
+                            renovacontrato.Description = 'Contrato precisa ser renovado';
+                            renovacontrato.OwnerId = contrato1.ownerid;
+                            renovacontrato.WhatId = contrato1.id; 
+                            renovacontrato.DurationInMinutes =60;
+                            renovacontrato.ActivityDateTime=Date.today();
+                             insert renovacontrato;   
+                           
+             }                   
+          }
+      }
+}
+
+@isTest
+    public static void contratotesteupdate (){
+        Account novaconta = new Account ();{
+            novaconta.name='Teste2';
+            novaconta.rating = 'Hot';
+            novaconta.type ='Prospect';
+            insert novaconta;        
+
+        Contract Novocontrato1 = new Contract ();{
+            Novocontrato1.AccountId = novaconta.id;
+            Novocontrato1.Status='Draft';
+            Novocontrato1.StartDate =date.newInstance(2021,07,15);
+            Novocontrato1.ContractTerm =12;
+            insert Novocontrato1;
+            
+            Contract Novocontrato2 = [SELECT Id FROM Contract];
+            Novocontrato2.StartDate = Date.Today()-345;
+            update Novocontrato2;
+                         
+            List <Event> listaeventos =  [SELECT ID FROM Event];
+            system.assert(listaeventos.size()>0, 'Trigger contrato não criou evento');
+                }
+        } 
+}
+}

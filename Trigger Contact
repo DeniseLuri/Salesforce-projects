@@ -1,0 +1,38 @@
+trigger contato on Contact (before insert, before update) {
+     if(Trigger.isinsert){
+    
+     For(Contact NovoContato : trigger.new){
+         if (NovoContato.LeadSource =='site'){
+             NovoContato.C__c = 'Quente';
+         } else if 
+             (NovoContato.LeadSource =='redes sociais'){
+                 NovoContato.C__c = 'Moderado';
+         } else {
+                 NovoContato.C__c = 'Frio';
+         }
+     }
+  }
+    
+     if(Trigger.isupdate){
+                 	
+            for(Contact itemOldcontact: Trigger.Old){
+                for(Contact itemNewcontact: Trigger.New){
+
+
+ 		
+             		   if (itemOldcontact.LeadSource =='site'||itemOldcontact.LeadSource =='redes sociais'){
+                     	   itemNewcontact.C__c.adderror ('Você não pode alterar essa classificação');
+			
+				}
+			}
+     }
+}
+}
+//Quando um contato é criado, deve ser definida a classificação de acordo 
+//com a sua origem, contatos que possuem origem o site, devem ser considerados com
+//classificação quente, quando a origem é redes sociais é considerado moderado e qualquer
+//outra origem é considerada fria. O contato quando sofre alguma edição, se a origem estiver
+//com site, não poderá ser alterada a origem para qualquer outra nova origem. Também não
+//poderá ter sua classificação quente alterada para qualquer outra classificação se sua
+//origem for site. 
+
