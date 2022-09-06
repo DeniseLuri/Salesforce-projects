@@ -36,3 +36,11 @@ trigger contato on Contact (before insert, before update) {
 //poderá ter sua classificação quente alterada para qualquer outra classificação se sua
 //origem for site. 
 
+trigger AccountTrigger on Account (before update) {
+	for (account versaoNova: trigger.new ){
+		account versaoAntiga = trigger.oldMap.get(versaoNova.Id);
+		if(versaoAntiga.BillingCity!= versaoNova.BillingCity){
+			versaoNova.BillingCity.adderror ('Você não pode trocar a cidade');
+        }
+    }
+}

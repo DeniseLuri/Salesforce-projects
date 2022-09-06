@@ -20,21 +20,3 @@ trigger leadTrigger on Lead(before insert, before update, after insert, after up
 	}
 }
 
-@istest
-public class leadtriggerteste {
-    
-    @isTest
-    public static void cenario1 (){
-        Lead Novolead = new Lead ();{
-            Novolead.LastName = 'TESTE';
-            Novolead.Estado__c = 'SP';
-            Novolead.Company = 'TESTE';
-            Novolead.annualRevenue =70000;
-            
-            INSERT Novolead;
-            
-            List <lead> listadesqualificados =  [SELECT ID FROM Lead WHERE status LIKE 'desqualificado'];
-            system.assert(listadesqualificados.size()>0, 'Trigger Lead não desqualificou');
-                }
-        }       
-    }

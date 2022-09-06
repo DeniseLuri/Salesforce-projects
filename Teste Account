@@ -1,0 +1,27 @@
+@isTest
+public class Accounttest {
+    @isTest
+    public static void BillingCity (){
+    Account itemAcc = new Account();
+	itemAcc.Name = 'TestOld';
+    itemAcc.BillingCity = 'Porto Alegre';
+	insert itemAcc; 
+    
+    Test.startTest(); 
+    
+    try{ 
+	Account itemAccReg = [SELECT Id, BillingCity FROM Account WHERE Id =:itemAcc.Id];
+	itemAccReg.BillingCity = 'Aracaju';
+    update itemAccReg;}
+            
+    catch (DMLException e)
+			{system.debug ('não pode alterar a cidade');    
+			system.debug ('Exceção'+e); }
+     Test.stopTest();
+
+
+
+}
+    }
+
+

@@ -1,0 +1,22 @@
+@istest
+public class OppTeste {
+    @isTest
+    public static void cenario1 (){
+        Opportunity NovoOpp = new Opportunity ();{
+            NovoOpp.Name = 'TESTE';
+            NovoOpp.StageName = 'Fechado/Ganho';
+      		NovoOpp.CloseDate = Date.today();
+                      
+            INSERT NovoOpp;
+     
+            try{ 
+            Opportunity NovoOpp1 = [SELECT Id FROM Opportunity WHERE StageName = 'Fechado/Ganho'];
+            NovoOpp1.StageName = 'Nova Oportunidade';
+                update NovoOpp1;}
+            
+            catch (DMLException e)
+			{system.debug ('não pode alterar a fase');    
+			system.debug ('Exceção'+e); }
+
+
+
