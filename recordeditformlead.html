@@ -1,0 +1,17 @@
+<template>
+    <lightning-card class="slds-text-heading_large" title="Preencha todos os campos" icon-name="standard:record">
+    <div class="app slds-p-around_x-small">
+    <h1 class="slds-text-heading_medium"> Dados do Lead</h1>
+    <lightning-input type="text"  label="Nome" name="Name" onchange={handleInputChangeName} class="slds-m-bottom_xsmall"> </lightning-input>  
+    <lightning-input type="text"  label="Sobrenome" name="LastName" onchange={handleInputChangeLastName} class="slds-m-bottom_xsmall"> </lightning-input> 
+    <lightning-input type="text"  label="Empresa" name="Company" onchange={handleInputChangeCompany} class="slds-m-bottom_xsmall"> </lightning-input> 
+   <template if:true={StatusValues.data}>
+    <lightning-combobox label="Fase" name="Status" value={value} options={StatusValues.data.values} onchange={handleInputChangeStatus} class="slds-m-bottom_xsmall"> </lightning-combobox> 
+    </template>
+    <lightning-button variant="brand" label= "Criar" onclick={createLead} class="slds-m-bottom_xsmall" ></lightning-button>
+
+ </div>
+
+</lightning-card>
+    
+</template>
